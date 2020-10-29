@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="da">
+
+<head>
+    <meta charset="utf-8">
+    <title>Er der fredagsfranskbrød i dag?</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        body {
+            background-color: #2f343f;
+        }
+
+        p {
+            color: white;
+        }
+
+        h1 {
+            color: white;
+        }
+
+        .answer-yes {
+            color: green;
+        }
+
+        .answer-no {
+            color: red;
+        }
+
+    </style>
+</head>
+
+<body>
+<div id="content">
+    <center>
+        <div style="margin-top: 50px"></div>
+        <h1>Er der fredagsfranskbrød i dag?</h1>
+
+        <h1 class="answer">Maybe?</h1>
+
+        <img src="fritfit.png" style="max-width: 50%" name="canvas" alt="Grafisk repræsentation af denne dag"/>
+
+        <p><a href="mailto:fit@fklub.dk"><img src="fritfit.png"/></a></p>
+        <i style="color: white">Bemærk der tages forbehold for pandemier</i>
+    </center>
+</div>
+</body>
+
+
+<script>
+    // https://stackoverflow.com/questions/19693256/javascript-display-random-images
+    function displayRandomImage(arr) {
+        document.canvas.src = arr[Math.floor(Math.random() * arr.length)];
+    }
+
+    // Ugly workaround because no way am I going to set up nodejs - note: zero-indexed
+    const num_yes_images = 3;
+    const num_no_images = 1;
+
+    let yes_images = [];
+    for (let i = 0; i <= num_yes_images; i++) {
+        yes_images.push("yes-images/" + i + ".jpg");
+    }
+
+    let no_images = []
+    for (let j = 0; j <= num_no_images; j++) {
+        no_images.push("no-images/" + j + ".jpg");
+    }
+
+    let content
+    const correct_date = new Date().getDay() === 3; // Fridaybread occurs every Wednesday, naturally
+
+    if (correct_date) {
+        content = "JA! :)";
+        displayRandomImage(yes_images)
+    } else {
+        content = "Nej :(";
+        displayRandomImage(no_images)
+    }
+
+    document.querySelector(".answer").innerHTML = content
+    document.querySelector(".answer").setAttribute("class", "answer-" + (correct_date ? "yes" : "no"))
+</script>
+
+</html>
